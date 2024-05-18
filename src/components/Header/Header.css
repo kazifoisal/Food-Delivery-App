@@ -1,0 +1,29 @@
+#header {
+    height: 40vw;
+    background: url("/header_img.png") no-repeat center center; 
+    background-size: contain;
+    margin: 30px auto;
+    position: relative;
+}
+
+#header-contents {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 1.5vw;
+    max-width: 50%;
+    bottom: 10%;
+    left: 6vw;
+    animation: fadeIn 3s;
+}
+
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
