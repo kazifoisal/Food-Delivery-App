@@ -14,13 +14,13 @@ const ExploreMenu = ({category, setCategory}) => {
           return (
             <div key={index} id="explore-menu-list-item" onClick={()=>setCategory(prev => prev === item.menu_name ? "All": item.menu_name)}>
               <img id={category === item.menu_name ? "Active": " "} src={item.menu_image} alt="" className="w-[7.5rvw] min-w-[80px] md:min-w-[100px] lg:min-w-[120px] cursor-pointer rounded-full transition"/>
-              <p className="mt-6 text-[#747474] cursor-pointer"> {item.menu_name}</p>
+              <p className="mt-3 text-[#747474] cursor-pointer"> {item.menu_name}</p>
             </div>
           )
         })}
       </div>
       </div>
-      <hr  className="m-[10px 0px] h-[2px] bg-[#e2e2e2] mx-12"/>
+      <hr  className="m-[10px 0px] h-[2px] bg-[#e2e2e2] mx-12 mt-6"/>
     </>
   );
 };
