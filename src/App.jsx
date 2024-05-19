@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home"
 import Cart from "./pages/Cart/Cart"
 import PlaceOrder from "./pages/PlaceOrder/PlaceOrder"
 import Footer from "./components/Footer/Footer"
+import AppDownload from "./components/App-Downloader/AppDownload"
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     <Route path="/Cart" element={<Cart/>}/>
     <Route path="/Order" element={<PlaceOrder/>}/>
     </Routes>
+    <AppDownload></AppDownload>
     <Footer/>
     </>
   )

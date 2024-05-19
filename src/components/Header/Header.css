@@ -6,6 +6,15 @@
     position: relative;
 }
 
+@media (max-width:750px) {
+    #header-contents{
+        max-width: 55%;
+    }
+    #header{
+        height: 39vw;
+    }
+}
+
 #header-contents {
     position: absolute;
     display: flex;
