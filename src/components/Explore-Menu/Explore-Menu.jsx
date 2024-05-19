@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { menu_list } from "../../assets/assets";
 import "./Explore-menu.css"
-const ExploreMenu = () => {
-    const [category, setCategory]= useState("All");
+const ExploreMenu = ({category, setCategory}) => {
   return (
     <>
       <div id="explore-menu" className="mx-[4%]">
-      <h1 className="text-5xl font-outfit">Explore our menu</h1>
+      <h1 className="text-5xl font-semibold">Explore our menu</h1>
       <p id="explore-menu-text" className="max-w-[55%] text-gray-600 font-medium">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos esse dolor quam, consequuntur suscipit fugit inventore veniam. Odit in sunt cupiditate soluta amet exercitationem labore nisi. Libero, ea illo! Sequi!
       </p>
