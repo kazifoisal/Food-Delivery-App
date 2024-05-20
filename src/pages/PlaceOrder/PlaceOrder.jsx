@@ -2,15 +2,7 @@ import { useContext } from "react";
 import { StoreContext } from "../../Context/storeContext";
 
 const PlaceOrder = () => {
-  const { cartItems, food_list } = useContext(StoreContext);
-
-  const subtotal = food_list.reduce((acc, item) => {
-    const quantity = cartItems[item._id] || 0;
-    return acc + item.price * quantity;
-  }, 0);
-
-  const deliveryFee = 2;
-  const total = subtotal + deliveryFee;
+  const { cartItems, food_list, getTotalAmount } = useContext(StoreContext);
 
   return (
     <form id="place-order" className="container flex flex-col  lg:flex-row gap-8 mt-20 lg:py-12">
@@ -38,17 +30,17 @@ const PlaceOrder = () => {
           <h2 className="text-3xl font-bold mb-4">Cart Totals</h2>
           <div id="cart-total-details" className="flex justify-between mb-2">
             <p>Subtotal</p>
-            <p>${subtotal.toFixed(2)}</p>
+            <p>${getTotalAmount()}</p>
           </div>
           <hr />
           <div id="cart-total-deliveryDetails" className="flex justify-between my-2">
             <p>Delivery Fee</p>
-            <p>${deliveryFee.toFixed(2)}</p>
+            <p>${getTotalAmount()=== 0 ? 0 : 2}</p>
           </div>
           <hr />
           <div id="cart-total-result" className="flex justify-between mt-2">
             <b>Total</b>
-            <b>${total.toFixed(2)}</b>
+            <b>${getTotalAmount()=== 0 ? 0 : getTotalAmount()+2}</b>
           </div>
         </div>
         <button className="w-full mt-4 bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700">Proceed to Checkout</button>

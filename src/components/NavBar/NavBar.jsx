@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { assets } from "../../assets/assets";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom"; 
 import "../NavBar/NavBar.css";
+import { StoreContext } from "../../Context/storeContext";
 
 const NavBar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("Home");
+  const {getTotalAmount} = useContext(StoreContext)
   return (
     <>
       <div
@@ -16,7 +18,7 @@ const NavBar = ({ setShowLogin }) => {
             src={assets.logo}
             alt="logoImg"
             id="logo"
-            className="w-24 md:w-32 lg:w-40" // Adjusted widths for different screen sizes
+            className="w-24 md:w-32 lg:w-40" 
           />
         </Link>
 
@@ -68,7 +70,7 @@ const NavBar = ({ setShowLogin }) => {
             />
         </Link>
           
-            <div className="absolute bg-red-600 rounded-full w-3 h-3 top-[-5px] left-[44%] border-white border-2"></div>
+            <div className={getTotalAmount()===0 ? "" :"absolute bg-red-600 rounded-full w-3 h-3 top-[-5px] left-[44%] border-white border-2"} ></div>
           </div>
           <button
             className="border-2 px-5 py-1 text-md rounded-3xl hover:border-gray-500"
