@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { assets } from "../../assets/assets";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "../NavBar/NavBar.css";
 
-const NavBar = ({setShowLogin}) => {
+const NavBar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("Home");
   return (
     <>
@@ -10,32 +11,44 @@ const NavBar = ({setShowLogin}) => {
         id="navBar"
         className="flex justify-between items-center mx-4 mt-7 md:mx-12 md:mt-5 font-outfit"
       >
-        <img
-          src={assets.logo}
-          alt="logoImg"
-          id="logo"
-          className=" max-w-[23%] md:max-w-[8%] "
-        />
-        <ul className="hidden  gap-5 md:flex  text-lg md:items-center " id="navBar-menu">
-          <li className=" cursor-pointer" id={menu === "Home" ? "active" : " "} onClick={()=> setMenu("Home")}>
+        <Link to="/">
+          <img
+            src={assets.logo}
+            alt="logoImg"
+            id="logo"
+            className="w-24 md:w-32 lg:w-40" // Adjusted widths for different screen sizes
+          />
+        </Link>
+
+        <ul
+          className="hidden gap-5 md:flex text-lg md:items-center"
+          id="navBar-menu"
+        >
+          <li
+            className="cursor-pointer"
+            id={menu === "Home" ? "active" : ""}
+            onClick={() => setMenu("Home")}
+          >
             Home
           </li>
-          <li className=" cursor-pointer" id={menu === "Menu" ? "active" : " "} onClick={()=> setMenu("Menu")}>
+          <li
+            className="cursor-pointer"
+            id={menu === "Menu" ? "active" : ""}
+            onClick={() => setMenu("Menu")}
+          >
             Menu
           </li>
-
           <li
-            className=" cursor-pointer"
-            id={menu === "MobileApp" ? "active" : " "}
-            onClick={()=> setMenu("MobileApp")}
+            className="cursor-pointer"
+            id={menu === "MobileApp" ? "active" : ""}
+            onClick={() => setMenu("MobileApp")}
           >
             Mobile-App
           </li>
           <li
-            className=" cursor-pointer"
-            id={menu === "ContactUs" ? "active" : " "}
-            onClick={()=> setMenu("ContactUs")}
-
+            className="cursor-pointer"
+            id={menu === "ContactUs" ? "active" : ""}
+            onClick={() => setMenu("ContactUs")}
           >
             Contact Us
           </li>
@@ -44,17 +57,23 @@ const NavBar = ({setShowLogin}) => {
           <img
             src={assets.search_icon}
             alt="search-food"
-            className="w-[11%] h-[11%]  md:w-[9%] md:h-[9%]"
+            className="w-[11%] h-[11%] md:w-[9%] md:h-[9%]"
           />
           <div id="navBar-search-Icon" className="relative">
-            <img
+          <Link to="/cart">
+          <img
               src={assets.basket_icon}
               alt="addtoCartIcon"
               className="w-[65%] h-[65%] md:w-[70%] md:h-[70%]"
             />
-            <div className="absolute bg-red-600 rounded-full  w-3 h-3 top-[-5px] left-[44%] border-white border-2"></div>
+        </Link>
+          
+            <div className="absolute bg-red-600 rounded-full w-3 h-3 top-[-5px] left-[44%] border-white border-2"></div>
           </div>
-          <button className="border-2 px-5 py-1 text-md rounded-3xl hover:border-gray-500 " onClick={()=> setShowLogin(true)}>
+          <button
+            className="border-2 px-5 py-1 text-md rounded-3xl hover:border-gray-500"
+            onClick={() => setShowLogin(true)}
+          >
             Login
           </button>
         </div>
