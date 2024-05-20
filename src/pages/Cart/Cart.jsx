@@ -1,14 +1,17 @@
 import { useContext } from "react";
 import { StoreContext } from "../../Context/storeContext";
+import {useNavigate} from "react-router-dom"
 
 const Cart = () => {
   const { cartItems, food_list, removeFromCart } = useContext(StoreContext);
+  const navigate = useNavigate();
 
   const subtotal = food_list.reduce((acc, item) => {
     const quantity = cartItems[item._id] || 0;
     return acc + item.price * quantity;
   }, 0);
 
+  console.log(cartItems);
   const deliveryFee = 2;
 
   const total = subtotal + deliveryFee;
@@ -32,7 +35,7 @@ const Cart = () => {
               const quantity = cartItems[item._id];
               return (
                 <div key={item._id} id="cart-item-details-quantity" className="flex flex-wrap items-center justify-between py-4 ">
-                  <img src={item.image} alt={item.name} className="w-[95px] rounded-xl mx-auto" />
+                  <img src={item.image} alt={item.name} className="w-[56px] lg:w-[95px] rounded-xl mx-auto" />
                   <p className="w-1/6 text-center">{item.name}</p>
                   <p className="w-1/6 text-center">${item.price}</p>
                   <p className="w-1/6 text-center">{quantity}</p>
@@ -66,7 +69,7 @@ const Cart = () => {
             <b>${total.toFixed(2)}</b>
           </div>
         </div>
-        <button className="w-full mt-4 bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 ">Proceed to Checkout</button>
+        <button className="w-full mt-4 bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 " onClick={()=> navigate("/order")}>Proceed to Checkout</button>
       </div>
 
       <div id="cart-promocode" className="container mx-auto p-4  mt-10 lg:mt-14  rounded-lg lg:w-[90%]">
