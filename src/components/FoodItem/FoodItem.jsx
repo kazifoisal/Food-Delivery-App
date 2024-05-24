@@ -3,12 +3,12 @@ import { assets } from "../../assets/assets";
 import { StoreContext } from "../../Context/storeContext";
 
 const FoodItem = ({ id, name, description, price, image }) => {
-  const { addToCart, removeFromCart, cartItems } = useContext(StoreContext);
+  const { addToCart, removeFromCart, cartItems ,url} = useContext(StoreContext);
   return (
     <div id="food-item" className="border rounded-xl overflow-hidden">
       <div id="food-item-img-container" className="relative mb-2">
         <img
-          src={image}
+          src={url+"/images/"+image}
           id="food-item-image"
           alt="food-image"
           className="w-full h-48 object-cover rounded-t-xl"

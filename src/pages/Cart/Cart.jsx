@@ -3,7 +3,7 @@ import { StoreContext } from "../../Context/storeContext";
 import {useNavigate} from "react-router-dom"
 
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart ,getTotalAmount} = useContext(StoreContext);
+  const { cartItems, food_list, removeFromCart ,getTotalAmount,url} = useContext(StoreContext);
   const navigate = useNavigate();
 
   return (
@@ -25,7 +25,7 @@ const Cart = () => {
               const quantity = cartItems[item._id];
               return (
                 <div key={item._id} id="cart-item-details-quantity" className="flex flex-wrap items-center justify-between py-4 ">
-                  <img src={item.image} alt={item.name} className="w-[56px] lg:w-[95px] rounded-xl mx-auto" />
+                  <img src={url+"/images/"+item.image} alt={item.name} className="w-[56px] lg:w-[95px] rounded-xl mx-auto" />
                   <p className="w-1/6 text-center">{item.name}</p>
                   <p className="w-1/6 text-center">${item.price}</p>
                   <p className="w-1/6 text-center">{quantity}</p>
