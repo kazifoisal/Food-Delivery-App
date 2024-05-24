@@ -10,7 +10,6 @@ const NavBar = ({ setShowLogin }) => {
 
   function toggle() {
     setIsOpen((isOpen) => !isOpen);
-    console.log("Toggle state:", isOpen);
   }
 
   const handleLogout = () => {
