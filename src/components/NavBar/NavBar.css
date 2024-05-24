@@ -1,3 +1,7 @@
 #active{
     border-bottom: 2px solid #49557e;
 }
+
+.newProfile{
+    display:none;
+}
