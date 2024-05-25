@@ -1,60 +1,88 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { food_list } from "../assets/assets";
-export const StoreContext = createContext(null);
 import axios from "axios";
+
+export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  const url ="http://localhost:4000"
-  const [token, setToken]= useState("");
+  const url = "http://localhost:4000";
+  const [token, setToken] = useState("");
+  const [food_list, setFoodList] = useState([]);
 
-  const [food_list,setFoodList]= useState([])
-
-  const addToCart = (itemId) => {
+  const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
-      setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
+      setCartItems(prev => ({ ...prev, [itemId]: 1 }));
+    } else {
+      setCartItems(prev => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     }
-    else{
-        setCartItems((prev)=>({...prev,[itemId]:prev[itemId]+1}))
+    if (token) {
+      try {
+        await axios.post(`${url}/api/cart/add`, { itemId }, { headers: { token } });
+      } catch (error) {
+        console.error("Failed to add item to cart:", error);
+      }
     }
   };
 
-  const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId]-1 }));
+  const removeFromCart = async (itemId) => {
+    if (cartItems[itemId] > 0) {
+      setCartItems(prev => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+      if (token) {
+        try {
+          await axios.post(`${url}/api/cart/remove`, { itemId }, { headers: { token } });
+        } catch (error) {
+          console.error("Failed to remove item from cart:", error);
+        }
+      }
+    }
   };
 
-const getTotalAmount =()=>{
-  let totalAmount = 0;
-  for (const item in cartItems) {
-    //cartItems[item] koita cart kora ase seta bujhai jemon cartItems[0] : 2   ekhane suppose item1 er 2 quantity add kora ase  
-    if (cartItems[item]>0) {
-     // food_list holo akta object jekhane value ase ar item holo index represent kore akhon food_list._id suppose 1 jodi item 1 soman hoi tahole find method dea easily grab korte parbo then . price dea easily price ber korte parbo cz akta object pabo return e 
-      let itemInfo = food_list.find((product)=> product._id === item)
-      totalAmount += itemInfo.price*cartItems[item]; //artItems[item] bolte bujhai kotogulo ase cart e ei single product aki product koita order korse ?
+  const getTotalAmount = () => {
+    let totalAmount = 0;
+    for (const item in cartItems) {
+      if (cartItems[item] > 0) {
+        let itemInfo = food_list.find(product => product._id === item);
+        totalAmount += itemInfo.price * cartItems[item];
+      }
     }
-  }
-  return totalAmount;
-}
+    return totalAmount;
+  };
 
-const fetchFoodList= async()=>{
-  const response= await axios.get(url+"/api/food/list")
-  setFoodList(response.data.data);
-}
-
-useEffect(() => {
-  async function loadData() {
+  const fetchFoodList = async () => {
     try {
+      const response = await axios.get(`${url}/api/food/list`);
+      setFoodList(response.data.data);
+    } catch (error) {
+      console.error("Failed to fetch food list:", error);
+    }
+  };
+
+  const loadCartData = async (token) => {
+    try {
+      const response = await axios.post(`${url}/api/cart/get`, {}, { headers: { token } });
+      console.log(response.data.cartData);  
+      if (response.data && response.data.cartData) {
+        setCartItems(response.data.cartData);
+      } else {
+        setCartItems({}); 
+      }
+    } catch (error) {
+      console.error("Failed to load cart data:", error);
+      setCartItems({}); 
+    }
+  };
+
+  useEffect(() => {
+    const loadData = async () => {
       await fetchFoodList();
       const storedToken = localStorage.getItem("token");
       if (storedToken) {
         setToken(storedToken);
+        await loadCartData(storedToken);
       }
-    } catch (error) {
-      console.error("Failed to load data", error);
-    }
-  }
-  loadData();
-}, []);
+    };
+    loadData();
+  }, []);
 
   const ContextValue = {
     food_list,
