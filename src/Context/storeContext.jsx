@@ -58,19 +58,20 @@ const StoreContextProvider = (props) => {
   };
 
   const loadCartData = async (token) => {
+    if (!token) {
+      console.error("Token is not available");
+      return;
+    }
     try {
       const response = await axios.post(`${url}/api/cart/get`, {}, { headers: { token } });
-      console.log(response.data.cartData);  
-      if (response.data && response.data.cartData) {
-        setCartItems(response.data.cartData);
-      } else {
-        setCartItems({}); 
-      }
+      const cartData = response.data.message|| {};
+      setCartItems(cartData);
     } catch (error) {
       console.error("Failed to load cart data:", error);
-      setCartItems({}); 
+      setCartItems({});
     }
   };
+  
 
   useEffect(() => {
     const loadData = async () => {
@@ -80,6 +81,7 @@ const StoreContextProvider = (props) => {
         setToken(storedToken);
         await loadCartData(storedToken);
       }
+
     };
     loadData();
   }, []);
