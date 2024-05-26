@@ -1,23 +1,25 @@
 import { useContext, useState } from "react";
 import { assets } from "../../assets/assets";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "../NavBar/NavBar.css";
 import { StoreContext } from "../../Context/storeContext";
 
 const NavBar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("Home");
   const [isOpen, setIsOpen] = useState(false);
+  const { getTotalAmount, token, setToken } = useContext(StoreContext);
 
+  const navigate = useNavigate()
   function toggle() {
     setIsOpen((isOpen) => !isOpen);
   }
 
-  const handleLogout = () => {
-    setToken(null);
-    setIsOpen(false);
+  const logOut = () => {
+    localStorage.removeItem("token")
+    setToken("");
+    navigate("/");
   };
 
-  const { getTotalAmount, token, setToken } = useContext(StoreContext);
   return (
     <>
       <div
@@ -110,7 +112,7 @@ const NavBar = ({ setShowLogin }) => {
                   className="absolute right-0 mt-2 w-40 sm:w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-20"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <li className="flex items-center px-3 py-2 sm:px-4 sm:py-2 hover:bg-gray-100 cursor-pointer">
+                  <li onClick={()=> navigate("/myorders")} className="flex items-center px-3 py-2 sm:px-4 sm:py-2 hover:bg-gray-100 cursor-pointer">
                     <img
                       src={assets.bag_icon}
                       alt="Orders Icon"
@@ -121,7 +123,7 @@ const NavBar = ({ setShowLogin }) => {
                   <hr className="border-gray-200" />
                   <li
                     className="flex items-center px-3 py-2 sm:px-4 sm:py-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={handleLogout}
+                    onClick={logOut}
                   >
                     <img
                       src={assets.logout_icon}
