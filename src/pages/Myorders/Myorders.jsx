@@ -43,7 +43,7 @@ const MyOrders = () => {
             <p className="flex items-center text-sm font-semibold">
               <span className="text-green-500 mr-2">&#x25cf;</span> {order.status}
             </p>
-            <button className="bg-orange-500 hover:bg-orange-700 text-white py-2 rounded-lg px-4 ">Track Order</button>
+            <button onClick={fetchOrders} className="bg-orange-500 hover:bg-orange-700 text-white py-2 rounded-lg px-4 ">Track Order</button>
           </div>
         ))}
       </div>
