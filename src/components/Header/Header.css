@@ -1,6 +1,6 @@
 #header {
     height: 40vw;
-    background: url("/header_img.png") no-repeat center center; 
+    background: url("../../assets/header_img.png") no-repeat center center; 
     background-size: contain;
     margin: 30px auto;
     position: relative;
